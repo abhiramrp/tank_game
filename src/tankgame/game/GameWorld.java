@@ -2,6 +2,7 @@ package tankgame.game;
 
 import tankgame.Launcher;
 import tankgame.GameConstants;
+import tankgame.Resources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -57,43 +58,24 @@ public class GameWorld extends JPanel implements Runnable {
         this.tick = 0;
         this.t1.setX(300);
         this.t1.setY(300);
-        this.t2.setX(900);
-        this.t2.setY(900);
+        this.t2.setX(500);
+        this.t2.setY(500);
     }
 
     public void InitializeGame() {
+
+        Resources.initImages();
+
         this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        BufferedImage t1img = null;
-        BufferedImage t2img = null;
 
-        try {
-            t1img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("resources/images/tank1.png"),
-                            "Could not find tank1.png")
-            );
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
+        t1 = new Tank(300, 300, 0, 0, (short) 0, Resources.getImage("tank1img"));
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
         this.lf.getJf().addKeyListener(tc1);
 
-        try {
-            t2img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("resources/images/tank2.png"),
-                            "Could not find tank2.png")
-            );
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        t2 = new Tank(900, 900, 0, 0, (short) 0, t2img);
+        t2 = new Tank(500, 500, 0, 0, (short) 0, Resources.getImage("tank2img"));
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_BACK_SPACE);
         this.lf.getJf().addKeyListener(tc2);
     }
