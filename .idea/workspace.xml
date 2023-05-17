@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0be8ee58-8455-41bd-b648-44d9f290cbee" name="Changes" comment="added readme.md">
-      <change afterPath="$PROJECT_DIR$/src/resources/images/tank1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/images/title.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/GameConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/Launcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/game/GameWorld.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/game/Tank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/game/TankControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/menus/EndGamePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/menus/StartMenuPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/images/tank2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tankgame/game/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankgame/game/GameWorld.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +36,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/abhiramrishiprattipati/IdeaProjects/tank_game/src/tankgame/menus",
+    "last_opened_file_path": "/Users/abhiramrishiprattipati/IdeaProjects/tank_game/src/resources/images",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/resources/images" />
+      <recent name="$PROJECT_DIR$/src/tankgame/menus" />
       <recent name="$PROJECT_DIR$/resources" />
     </key>
   </component>
@@ -81,7 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1684280881088</updated>
       <workItem from="1684280883171" duration="3100000" />
-      <workItem from="1684338306450" duration="2216000" />
+      <workItem from="1684338306450" duration="4351000" />
     </task>
     <task id="LOCAL-00001" summary="added readme.md">
       <created>1684280991415</created>
