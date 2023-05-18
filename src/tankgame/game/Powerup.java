@@ -3,7 +3,7 @@ package tankgame.game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class Powerup implements Collidible {
+public abstract class Powerup {
 
     private float y, x;
     private BufferedImage img;
@@ -27,19 +27,23 @@ public abstract class Powerup implements Collidible {
     public abstract void doPowerUp();
 
 
+    /*
+    @Override
+    void handleCollision(Collidible with) {}
+
+
     @Override
     public Rectangle getHitBox() {
         return this.hitbox.getBounds();
     }
 
-    @Override
-    void handleCollision(Collidible with) {
 
-    }
 
     @Override
     boolean isCollidle() {
         return false;
     }
+
+     */
 
 }

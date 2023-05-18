@@ -12,12 +12,12 @@ import tankgame.game.powerup.SlowRotate;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -69,6 +69,8 @@ public class GameWorld extends JPanel implements Runnable {
                     }
                 }
 
+                /*
+
                 for (int i=0; i < powerups.size(); i++) {
                     Powerup p = this.powerups.get(i);
                     if(p.getHitBox().intersects(this.t1.getHitBox())) {
@@ -79,6 +81,8 @@ public class GameWorld extends JPanel implements Runnable {
                         System.out.println("t2 touched wall");
                     }
                 }
+
+                 */
 
                 this.repaint();
 
@@ -190,6 +194,12 @@ public class GameWorld extends JPanel implements Runnable {
         buffer.setColor(Color.BLACK);
         buffer.fillRect(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
 
+        for(int i=0; i < GameConstants.WORLD_WIDTH; i+= 320){
+            for(int j=0; j < GameConstants.WORLD_HEIGHT; j+= 240) {
+                buffer.drawImage(Resources.getImage("floor"), i, j, null);
+            }
+        }
+
         walls.forEach(w -> w.drawImage(buffer));
         powerups.forEach(p -> p.drawImage(buffer));
 
@@ -210,8 +220,18 @@ public class GameWorld extends JPanel implements Runnable {
 
          */
 
+        this.drawMiniMap(world, g2);
+
+    }
+
+    private void drawMiniMap(BufferedImage world, Graphics2D g2) {
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-        g2.scale(.2, .2);
-        g2.drawImage(minimap, 2000, 2000, null);
+
+        AffineTransform at = new AffineTransform();
+        at.translate(GameConstants.GAME_SCREEN_WIDTH/2f - (GameConstants.WORLD_WIDTH*0.2)/2f,
+                GameConstants.GAME_SCREEN_HEIGHT - GameConstants.WORLD_HEIGHT*0.2);
+        at.scale(.2, .2);
+        g2.drawImage(minimap, at, null);
+
     }
 }
