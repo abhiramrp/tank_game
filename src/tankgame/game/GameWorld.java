@@ -3,14 +3,18 @@ package tankgame.game;
 import tankgame.Launcher;
 import tankgame.GameConstants;
 import tankgame.Resources;
+import tankgame.Sound;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Objects;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class GameWorld extends JPanel implements Runnable {
@@ -22,14 +26,28 @@ public class GameWorld extends JPanel implements Runnable {
     private Launcher lf;
     private long tick = 0;
 
+    private Sound sand;
+
+    List<Wall> walls = new ArrayList<Wall>();
+
     public GameWorld(Launcher lf) {
         this.lf = lf;
     }
 
     @Override
     public void run() {
+        Thread t;
         try {
             this.resetGame();
+
+            /*
+            t = new Thread(new Sound(Resources.getClip("sand")));
+            t.start();
+
+             */
+
+            sand.run();
+
             while (true) {
                 this.tick++;
 
@@ -41,12 +59,13 @@ public class GameWorld extends JPanel implements Runnable {
                 Thread.sleep( 1000 / 144);
 
 
-                /**
+
                 if (this.tick >= 144 * 8) {
+                    sand.stopSound();
                     this.lf.setFrame("end");
                     return;
                 }
-                 */
+
             }
         } catch (InterruptedException ignored) {
             System.out.println(ignored);
@@ -66,10 +85,11 @@ public class GameWorld extends JPanel implements Runnable {
 
         Resources.initResources();
 
-        this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
-                GameConstants.GAME_SCREEN_HEIGHT,
+        this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
+                GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
+        this.sand = new Sound(Resources.getClip("sand"));
 
         t1 = new Tank(300, 300, 0, 0, (short) 0, Resources.getImage("tank1img"));
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
@@ -78,17 +98,66 @@ public class GameWorld extends JPanel implements Runnable {
         t2 = new Tank(500, 500, 0, 0, (short) 0, Resources.getImage("tank2img"));
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_BACK_SPACE);
         this.lf.getJf().addKeyListener(tc2);
+
+        try (BufferedReader mapReader = new BufferedReader(new InputStreamReader(GameWorld.class.getClassLoader().getResourceAsStream("resources/map.txt")))) {
+            String[] size = mapReader.readLine().split(",");
+
+            int numRows = Integer.parseInt(size[0]);
+            int numCols = Integer.parseInt(size[1]);
+
+            for(int i=0; mapReader.ready(); i++) {
+                String[] items = mapReader.readLine().split("");
+
+                for (int j=0; j < items.length; j++) {
+                    switch (items[j]) {
+                        case "3", "9" -> {
+                            Wall w = new Wall(i * 30, j * 30, Resources.getImage("wall"));
+                            walls.add(w);
+                        }
+                        case "2" -> {
+                            Cactus c = new Cactus(i * 30, j * 30, Resources.getImage("cactus"));
+                            walls.add(c);
+                        }
+
+                    }
+                }
+
+            }
+
+
+        } catch (IOException e) {
+            System.out.println(e);
+            e.printStackTrace();
+            System.exit(-2);
+        }
+
+
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
+
+        buffer.setColor(Color.BLACK);
+        buffer.fillRect(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+
+        walls.forEach(w -> w.drawImage(buffer));
+
+
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
 
-        // this.world.getSubimage();
+        // g2.drawImage(world, 0, 0, null);
 
-        g2.drawImage(world, 0, 0, null);
+        BufferedImage lh = world.getSubimage((int)t1.getX(), (int)t1.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
+        g2.drawImage(lh, 0, 0, null);
+
+        // BufferedImage rh = world.getSubimage((int)t2.getX(), (int)t2.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
+        // g2.drawImage(lh, 0, 0, null);
+
+        BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+        g2.scale(.2, .2);
+        g2.drawImage(minimap, 2000, 2000, null);
     }
 }

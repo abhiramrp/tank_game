@@ -25,6 +25,8 @@ public class Resources {
         try {
             Resources.images.put("tank1img", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/tank1.png")));
             Resources.images.put("tank2img", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/tank2.png")));
+            Resources.images.put("wall", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/wall.png")));
+            Resources.images.put("cactus", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/cactus.png")));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +43,11 @@ public class Resources {
             clip = AudioSystem.getClip();
             clip.open(as);
             Resources.clips.put("bullet", clip);
+
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/sand.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(as);
+            Resources.clips.put("sand", clip);
 
             as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/shoot_tank.wav"));
             clip = AudioSystem.getClip();
