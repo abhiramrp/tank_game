@@ -135,6 +135,7 @@ public class Tank implements Collidible{
         if (this.ShootPressed && this.coolDown >= this.fireDelay) {
             this.coolDown = 0;
             b = new Bullet(x, y, angle, Resources.getImage("bullet"));
+            // System.out.println(b.toString());
             (new Sound(Resources.getClip("bullet"))).playSound();
             ammo.add(b);
         }
@@ -184,6 +185,7 @@ public class Tank implements Collidible{
         }
 
         this.hitbox.setLocation((int)this.x, (int)this.y);
+        check_screen();
     }
 
     public void check_screen() {
@@ -203,15 +205,23 @@ public class Tank implements Collidible{
         }
 
         if (this.screen_y > GameConstants.WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT) {
-            this.screen_y = GameConstants.WORLD_WIDTH - GameConstants.GAME_SCREEN_HEIGHT;
+            this.screen_y = GameConstants.WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT;
         }
+    }
 
+    public int getScreen_x() {
+        return this.screen_x;
+    }
+
+    public int getScreen_y() {
+        return this.screen_y;
     }
 
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
     }
+
 
     void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);

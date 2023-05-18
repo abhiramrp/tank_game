@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -61,11 +62,11 @@ public class GameWorld extends JPanel implements Runnable {
                 for (int i=0; i < walls.size(); i++) {
                     Wall w = this.walls.get(i);
                     if(w.getHitBox().intersects(this.t1.getHitBox())) {
-                        System.out.println("t1 touched wall");
+                        // System.out.println("t1 touched wall");
                     }
 
                     if(w.getHitBox().intersects(this.t2.getHitBox())) {
-                        System.out.println("t2 touched wall");
+                        // System.out.println("t2 touched wall");
                     }
                 }
 
@@ -209,19 +210,23 @@ public class GameWorld extends JPanel implements Runnable {
 
         g2.drawImage(world, 0, 0, null);
 
-        /*
 
-        BufferedImage lh = world.getSubimage((int)t1.getX(), (int)t1.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
-        g2.drawImage(lh, 0, 0, null);
-
-
-        BufferedImage rh = world.getSubimage((int)t2.getX(), (int)t2.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
-        g2.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/ 2, 0, null);
-
-         */
+        this.drawSplitScreen(world, g2);
 
         this.drawMiniMap(world, g2);
 
+    }
+
+    private void drawSplitScreen(BufferedImage world, Graphics2D g2) {
+        BufferedImage lh = world.getSubimage(t1.getScreen_x(), t1.getScreen_y(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
+        g2.drawImage(lh, 0, 0, null);
+
+        BufferedImage rh = world.getSubimage(t2.getScreen_x(), t2.getScreen_y(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
+        g2.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2, 0, null);
+
+        g2.setColor(Color.black);
+        g2.drawRect(GameConstants.GAME_SCREEN_WIDTH/2 -2, 0, 4, GameConstants.GAME_SCREEN_HEIGHT);
+        g2.fillRect(GameConstants.GAME_SCREEN_WIDTH/2 -2, 0, 4, GameConstants.GAME_SCREEN_HEIGHT);
     }
 
     private void drawMiniMap(BufferedImage world, Graphics2D g2) {
@@ -229,7 +234,7 @@ public class GameWorld extends JPanel implements Runnable {
 
         AffineTransform at = new AffineTransform();
         at.translate(GameConstants.GAME_SCREEN_WIDTH/2f - (GameConstants.WORLD_WIDTH*0.2)/2f,
-                GameConstants.GAME_SCREEN_HEIGHT - GameConstants.WORLD_HEIGHT*0.2);
+                GameConstants.GAME_SCREEN_HEIGHT - GameConstants.WORLD_HEIGHT*0.3);
         at.scale(.2, .2);
         g2.drawImage(minimap, at, null);
 

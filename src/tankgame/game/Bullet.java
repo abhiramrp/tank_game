@@ -40,8 +40,8 @@ public class Bullet {
     }
 
     private void moveForwards() {
-        x = Math.round(R * Math.cos(Math.toRadians(angle)));
-        y = Math.round(R * Math.sin(Math.toRadians(angle)));
+        x += Math.round(R * Math.cos(Math.toRadians(angle)));
+        y += Math.round(R * Math.sin(Math.toRadians(angle)));
         checkBorder();
     }
 
@@ -66,7 +66,6 @@ public class Bullet {
     }
 
     void drawImage(Graphics g) {
-        System.out.println("Drew bullet");
 
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);

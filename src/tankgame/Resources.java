@@ -28,7 +28,6 @@ public class Resources {
 
             Resources.images.put("floor", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/floor.png")));
 
-
             Resources.images.put("bullet", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/bullet.png")));
 
             Resources.images.put("wall", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/wall.png")));
