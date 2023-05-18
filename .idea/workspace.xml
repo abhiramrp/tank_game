@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0be8ee58-8455-41bd-b648-44d9f290cbee" name="Changes" comment="added readme.md">
-      <change afterPath="$PROJECT_DIR$/src/resources/sounds/bad-explosion-6855.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/sounds/hit-someting-6037.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tankgame/Resources.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tankgame/Sound.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/sounds/bad-explosion-6855.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/sounds/bullet.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/sounds/hit-someting-6037.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/sounds/shoot_tank.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tankgame/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankgame/Resources.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tankgame/game/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankgame/game/GameWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tankgame/game/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankgame/game/Tank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tankgame/game/TankControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankgame/game/TankControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +42,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/abhiramrishiprattipati/IdeaProjects/tank_game/src/resources/sounds",
-    "nodejs_package_manager_path": "npm"
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -50,7 +54,7 @@
       <recent name="$PROJECT_DIR$/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Launcher">
+  <component name="RunManager" selected="Application.Resources">
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tankgame.Launcher" />
       <module name="tank_game" />
@@ -79,8 +83,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Resources" />
+        <item itemvalue="Application.Launcher" />
       </list>
     </recent_temporary>
   </component>
@@ -93,7 +97,9 @@
       <option name="presentableId" value="Default" />
       <updated>1684280881088</updated>
       <workItem from="1684280883171" duration="3100000" />
-      <workItem from="1684338306450" duration="7844000" />
+      <workItem from="1684338306450" duration="8853000" />
+      <workItem from="1684377325827" duration="2259000" />
+      <workItem from="1684379660745" duration="760000" />
     </task>
     <task id="LOCAL-00001" summary="added readme.md">
       <created>1684280991415</created>

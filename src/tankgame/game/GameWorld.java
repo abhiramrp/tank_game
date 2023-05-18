@@ -64,7 +64,7 @@ public class GameWorld extends JPanel implements Runnable {
 
     public void InitializeGame() {
 
-        Resources.initImages();
+        Resources.initResources();
 
         this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
                 GameConstants.GAME_SCREEN_HEIGHT,

@@ -3,12 +3,11 @@ package tankgame;
 import tankgame.game.GameWorld;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 public class Resources {
     private static Map<String, BufferedImage> images = new HashMap<>();
@@ -34,16 +33,46 @@ public class Resources {
     }
 
     public static void initClips() {
+        try {
+            AudioInputStream as;
+            Clip clip;
+
+            System.out.println("bef");
+
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/bullet.mp3"));
+
+            System.out.println("adf");
+
+            clip = AudioSystem.getClip();
+            clip.open(as);
+            Resources.clips.put("", clip);
+
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/shoot_tank.mp3"));
+            clip = AudioSystem.getClip();
+            clip.open(as);
+            Resources.clips.put("shot_tank", clip);
+
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            System.err.println(e);
+            e.printStackTrace();
+            System.exit(-2);
+        }
 
     }
 
+    public static void initResources() {
+        Resources.initImages();
+        Resources.initClips();
+    }
 
-    /**
+
     public static void main(String[] args) {
         Resources.initImages();
         Resources.initClips();
-        Resources.initAnimations();
+
     }
-     */
+
+
+
 
 }

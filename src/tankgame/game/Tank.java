@@ -1,6 +1,8 @@
 package tankgame.game;
 
 import tankgame.GameConstants;
+import tankgame.Resources;
+import tankgame.Sound;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -21,6 +23,7 @@ public class Tank {
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
+    private boolean ShootPressed;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
         this.x = x;
@@ -51,6 +54,12 @@ public class Tank {
         this.LeftPressed = true;
     }
 
+    void toggleShootPressed() {
+        this.ShootPressed = true;
+        (new Sound(Resources.getClip("bullet"))).playSound();
+    }
+
+
     void unToggleUpPressed() {
         this.UpPressed = false;
     }
@@ -65,6 +74,10 @@ public class Tank {
 
     void unToggleLeftPressed() {
         this.LeftPressed = false;
+    }
+
+    void unToggleShootPressed() {
+        this.ShootPressed = false;
     }
 
     void update() {
