@@ -37,20 +37,15 @@ public class Resources {
             AudioInputStream as;
             Clip clip;
 
-            System.out.println("bef");
-
-            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/bullet.mp3"));
-
-            System.out.println("adf");
-
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/bullet.wav"));
             clip = AudioSystem.getClip();
             clip.open(as);
-            Resources.clips.put("", clip);
+            Resources.clips.put("bullet", clip);
 
-            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/shoot_tank.mp3"));
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/shoot_tank.wav"));
             clip = AudioSystem.getClip();
             clip.open(as);
-            Resources.clips.put("shot_tank", clip);
+            Resources.clips.put("shoot_tank", clip);
 
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             System.err.println(e);
@@ -65,12 +60,13 @@ public class Resources {
         Resources.initClips();
     }
 
-
+    /*
     public static void main(String[] args) {
         Resources.initImages();
         Resources.initClips();
 
     }
+    */
 
 
 
