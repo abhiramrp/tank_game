@@ -58,6 +58,28 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t1.update();
                 this.t2.update();
 
+                for (int i=0; i < walls.size(); i++) {
+                    Wall w = this.walls.get(i);
+                    if(w.getHitBox().intersects(this.t1.getHitBox())) {
+                        System.out.println("t1 touched wall");
+                    }
+
+                    if(w.getHitBox().intersects(this.t2.getHitBox())) {
+                        System.out.println("t2 touched wall");
+                    }
+                }
+
+                for (int i=0; i < powerups.size(); i++) {
+                    Powerup p = this.powerups.get(i);
+                    if(p.getHitBox().intersects(this.t1.getHitBox())) {
+                        System.out.println("t1 touched wall");
+                    }
+
+                    if(p.getHitBox().intersects(this.t2.getHitBox())) {
+                        System.out.println("t2 touched wall");
+                    }
+                }
+
                 this.repaint();
 
                 Thread.sleep( 1000 / 144);
@@ -183,9 +205,6 @@ public class GameWorld extends JPanel implements Runnable {
         g2.drawImage(lh, 0, 0, null);
 
 
-         */
-
-        /*
         BufferedImage rh = world.getSubimage((int)t2.getX(), (int)t2.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
         g2.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/ 2, 0, null);
 

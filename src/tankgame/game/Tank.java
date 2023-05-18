@@ -11,12 +11,31 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class Tank {
+public class Tank implements Collidible{
     private float x;
     private float y;
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     private float vx;
     private float vy;
     private float angle;
+
+    private Rectangle hitbox;
 
     private int screen_x;
     private int screen_y;
@@ -50,15 +69,10 @@ public class Tank {
         this.vy = vy;
         this.img = img;
         this.angle = angle;
+
+        this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
 
-    void setX(float x){ this.x = x; }
-
-    void setY(float y) { this.y = y;}
-
-    float getX() {return this.x; }
-
-    float getY() {return this.y; }
 
     void toggleUpPressed() {
         this.UpPressed = true;
@@ -168,6 +182,8 @@ public class Tank {
         if (y >= GameConstants.WORLD_HEIGHT - 80) {
             y = GameConstants.WORLD_HEIGHT - 80;
         }
+
+        this.hitbox.setLocation((int)this.x, (int)this.y);
     }
 
     public void check_screen() {
@@ -223,9 +239,20 @@ public class Tank {
 
         g2d.fillRect((int)x,(int)y+30, 100, 25 );
 
+    }
 
+    @Override
+    public Rectangle getHitBox() {
+        return this.hitbox.getBounds();
+    }
 
+    @Override
+    public void handleCollision(Collidible with) {
 
+    }
 
+    @Override
+    public boolean isCollidle() {
+        return false;
     }
 }

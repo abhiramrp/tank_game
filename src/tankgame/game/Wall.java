@@ -5,14 +5,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 
-public class Wall {
+public class Wall implements Collidible {
     protected float y, x;
     protected BufferedImage img;
+
+    protected Rectangle hitbox;
 
     public Wall(float y, float x, BufferedImage img) {
         this.y = y;
         this.x = x;
         this.img = img;
+
+        this.hitbox = new Rectangle((int) x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
 
     @Override
@@ -24,5 +28,20 @@ public class Wall {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, (int)x, (int)y, null);
 
+    }
+
+    @Override
+    public Rectangle getHitBox() {
+        return this.hitbox.getBounds();
+    }
+
+    @Override
+    public void handleCollision(Collidible with) {
+
+    }
+
+    @Override
+    public boolean isCollidle() {
+        return false;
     }
 }
