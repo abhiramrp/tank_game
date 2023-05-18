@@ -4,6 +4,10 @@ import tankgame.Launcher;
 import tankgame.GameConstants;
 import tankgame.Resources;
 import tankgame.Sound;
+import tankgame.game.powerup.AddLife;
+import tankgame.game.powerup.AddSpeed;
+import tankgame.game.powerup.ResetHealth;
+import tankgame.game.powerup.SlowRotate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +33,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Sound sand;
 
     List<Wall> walls = new ArrayList<Wall>();
+    List<Powerup> powerups = new ArrayList<Powerup>();
 
     public GameWorld(Launcher lf) {
         this.lf = lf;
@@ -36,7 +41,6 @@ public class GameWorld extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        Thread t;
         try {
             this.resetGame();
 
@@ -59,12 +63,13 @@ public class GameWorld extends JPanel implements Runnable {
                 Thread.sleep( 1000 / 144);
 
 
-
+                /*
                 if (this.tick >= 144 * 8) {
                     sand.stopSound();
                     this.lf.setFrame("end");
                     return;
                 }
+                */
 
             }
         } catch (InterruptedException ignored) {
@@ -119,6 +124,27 @@ public class GameWorld extends JPanel implements Runnable {
                             walls.add(c);
                         }
 
+                        case "5" -> {
+                            AddLife a = new AddLife(i * 30, j * 30, Resources.getImage("addLife"));
+                            powerups.add(a);
+                        }
+
+                        case "6" -> {
+                            AddSpeed a = new AddSpeed(i * 30, j * 30, Resources.getImage("addSpeed"));
+                            powerups.add(a);
+                        }
+
+                        case "7" -> {
+                            ResetHealth r = new ResetHealth(i * 30, j * 30, Resources.getImage("resetHealth"));
+                            powerups.add(r);
+                        }
+
+                        case "8" -> {
+                            SlowRotate s = new SlowRotate(i * 30, j * 30, Resources.getImage("slowRotate"));
+                            powerups.add(s);
+                        }
+
+
                     }
                 }
 
@@ -143,18 +169,27 @@ public class GameWorld extends JPanel implements Runnable {
         buffer.fillRect(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
 
         walls.forEach(w -> w.drawImage(buffer));
+        powerups.forEach(p -> p.drawImage(buffer));
 
 
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
 
-        // g2.drawImage(world, 0, 0, null);
+        g2.drawImage(world, 0, 0, null);
+
+        /*
 
         BufferedImage lh = world.getSubimage((int)t1.getX(), (int)t1.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
         g2.drawImage(lh, 0, 0, null);
 
-        // BufferedImage rh = world.getSubimage((int)t2.getX(), (int)t2.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
-        // g2.drawImage(lh, 0, 0, null);
+
+         */
+
+        /*
+        BufferedImage rh = world.getSubimage((int)t2.getX(), (int)t2.getY(), GameConstants.GAME_SCREEN_WIDTH/ 2, GameConstants.GAME_SCREEN_HEIGHT);
+        g2.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/ 2, 0, null);
+
+         */
 
         BufferedImage minimap = world.getSubimage(0, 0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         g2.scale(.2, .2);

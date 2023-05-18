@@ -7,6 +7,9 @@ import tankgame.Sound;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 public class Tank {
     private float x;
@@ -15,7 +18,10 @@ public class Tank {
     private float vy;
     private float angle;
 
-    private float R = 5;
+    private int screen_x;
+    private int screen_y;
+
+    private float R = 4f;
     private float ROTATIONSPEED = 3.0f;
 
     private BufferedImage img;
@@ -24,6 +30,18 @@ public class Tank {
     private boolean RightPressed;
     private boolean LeftPressed;
     private boolean ShootPressed;
+
+    private Bullet b;
+    List<Bullet> ammo = new ArrayList<>();
+
+
+    float fireDelay = 120f;
+    float coolDown = 0f;
+    float rateOfFire = 1f;
+
+
+    private int health = 100;
+    private int lives = 5;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
         this.x = x;
@@ -36,7 +54,7 @@ public class Tank {
 
     void setX(float x){ this.x = x; }
 
-    void setY(float y) { this. y = y;}
+    void setY(float y) { this.y = y;}
 
     float getX() {return this.x; }
 
@@ -60,7 +78,6 @@ public class Tank {
 
     void toggleShootPressed() {
         this.ShootPressed = true;
-        (new Sound(Resources.getClip("bullet"))).playSound();
     }
 
 
@@ -101,6 +118,16 @@ public class Tank {
             this.rotateRight();
         }
 
+        if (this.ShootPressed && this.coolDown >= this.fireDelay) {
+            this.coolDown = 0;
+            b = new Bullet(x, y, angle, Resources.getImage("bullet"));
+            (new Sound(Resources.getClip("bullet"))).playSound();
+            ammo.add(b);
+        }
+
+        this.coolDown += this.rateOfFire;
+
+        this.ammo.forEach(b -> b.update());
 
     }
 
@@ -143,6 +170,28 @@ public class Tank {
         }
     }
 
+    public void check_screen() {
+        this.screen_x = (int)this.getX() - GameConstants.GAME_SCREEN_WIDTH / 4;
+        this.screen_y = (int)this.getY() - GameConstants.GAME_SCREEN_HEIGHT / 2;
+
+        if (this.screen_x < 0 ) {
+            screen_x = 0;
+        }
+
+        if (this.screen_y < 0) {
+            screen_y = 0;
+        }
+
+        if (this.screen_x > GameConstants.WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH / 2) {
+            this.screen_x = GameConstants.WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH / 2;
+        }
+
+        if (this.screen_y > GameConstants.WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT) {
+            this.screen_y = GameConstants.WORLD_WIDTH - GameConstants.GAME_SCREEN_HEIGHT;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
@@ -152,10 +201,31 @@ public class Tank {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
+
+        if (b!= null) b.drawImage(g2d);
+        this.ammo.forEach(b -> b.drawImage(g2d));
+
         g2d.drawImage(this.img, rotation, null);
         g2d.setColor(Color.RED);
-        //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+
+        g2d.setColor(Color.cyan);
+        g2d.drawRect((int)x,(int)y+30, 100, 25 );
+
+        if(this.health >= 70) {
+            g2d.setColor(Color.GREEN);
+        } else if (this.health >= 40) {
+            g2d.setColor(Color.yellow);
+        } else {
+            g2d.setColor(Color.RED);
+        }
+
+
+
+        g2d.fillRect((int)x,(int)y+30, 100, 25 );
+
+
+
+
 
     }
 }

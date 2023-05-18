@@ -25,8 +25,18 @@ public class Resources {
         try {
             Resources.images.put("tank1img", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/tank1.png")));
             Resources.images.put("tank2img", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/tank2.png")));
+
+            Resources.images.put("bullet", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/bullet.png")));
+
             Resources.images.put("wall", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/wall.png")));
             Resources.images.put("cactus", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/cactus.png")));
+
+            Resources.images.put("addHealth", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/powerups/addHealth.png")));
+            Resources.images.put("addSpeed", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/powerups/addSpeed.png")));
+            Resources.images.put("resetHealth", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/powerups/resetHealth.png")));
+            Resources.images.put("slowRotate", ImageIO.read(GameWorld.class.getClassLoader().getResource("resources/images/powerups/slowRotate.png")));
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,13 +77,16 @@ public class Resources {
         Resources.initClips();
     }
 
+
     /*
     public static void main(String[] args) {
         Resources.initImages();
         Resources.initClips();
 
     }
+
     */
+
 
 
 
