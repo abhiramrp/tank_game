@@ -14,4 +14,9 @@ public class AddSpeed extends Powerup {
     public void doPowerUp(Tank t) {
         t.addSpeed();
     }
+
+    @Override
+    public void setVisible(boolean b) {
+        this.visible = b;
+    }
 }

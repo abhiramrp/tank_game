@@ -16,4 +16,9 @@ public class SlowRotate extends Powerup {
 
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        this.visible = b;
+    }
+
 }

@@ -10,6 +10,8 @@ public class Wall implements Collidible {
     protected float y, x;
     protected BufferedImage img;
 
+    protected boolean visible;
+
     protected Rectangle hitbox;
 
     public Wall(float y, float x, BufferedImage img) {
@@ -18,6 +20,7 @@ public class Wall implements Collidible {
         this.img = img;
 
         this.hitbox = new Rectangle((int) x, (int)y, this.img.getWidth(), this.img.getHeight());
+        this.visible = true;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class Wall implements Collidible {
     }
 
     @Override
-    public boolean isCollidle() {
-        return false;
+    public boolean isVisible() {
+        return this.visible;
     }
 }

@@ -345,8 +345,12 @@ public class Tank implements Collidible{
     }
 
     @Override
-    public boolean isCollidle() {
-        return false;
+    public boolean isVisible() {
+        if(this.lives <= 0) {
+            return false;
+        }
+
+        return true;
     }
 
 }

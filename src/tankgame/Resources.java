@@ -67,6 +67,11 @@ public class Resources {
             clip.open(as);
             Resources.clips.put("shoot_tank", clip);
 
+            as = AudioSystem.getAudioInputStream(Resources.class.getClassLoader().getResource("resources/sounds/powerup.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(as);
+            Resources.clips.put("powerup", clip);
+
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             System.err.println(e);
             e.printStackTrace();

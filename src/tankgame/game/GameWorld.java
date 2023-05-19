@@ -74,20 +74,21 @@ public class GameWorld extends JPanel implements Runnable {
                     }
                 }
 
-                /*
+
 
                 for (int i=0; i < powerups.size(); i++) {
                     Powerup p = this.powerups.get(i);
                     if(p.getHitBox().intersects(this.t1.getHitBox())) {
-                        System.out.println("t1 touched wall");
+                        p.handleCollision(t1);
+                        powerups.remove(p);
                     }
 
                     if(p.getHitBox().intersects(this.t2.getHitBox())) {
-                        System.out.println("t2 touched wall");
+                        p.handleCollision(t2);
+                        powerups.remove(p);
                     }
                 }
 
-                 */
 
                 this.repaint();
 

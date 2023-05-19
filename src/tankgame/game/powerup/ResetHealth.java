@@ -15,5 +15,10 @@ public class ResetHealth extends Powerup {
         t.resetHealth();
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        this.visible = b;
+    }
+
 
 }
