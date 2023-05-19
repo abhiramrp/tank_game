@@ -56,13 +56,9 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
 
-                this.t1.update();
-                this.t2.update();
+                this.t1.update(t2);
+                this.t2.update(t1);
 
-                if(this.t1.getHitBox().intersects(this.t2.getHitBox())) {
-                    t1.handleCollision(t2);
-                    t2.handleCollision(t1);
-                }
 
 
                 for (int i=0; i < walls.size(); i++) {

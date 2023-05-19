@@ -17,6 +17,8 @@ public class Tank implements Collidible{
 
     private boolean isReverse;
 
+    private boolean isTankCollide;
+
     public float getX() {
         return x;
     }
@@ -35,6 +37,11 @@ public class Tank implements Collidible{
         this.y = y;
         this.updateHitBox((int) this.x, (int) this.y);
     }
+
+    public void setTankCollide(boolean tankCollide) {
+        isTankCollide = tankCollide;
+    }
+
 
     private float vx;
     private float vy;
@@ -78,8 +85,11 @@ public class Tank implements Collidible{
         this.angle = angle;
 
         this.isReverse = false;
+        this.isTankCollide = false;
         this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
+
+
 
     // Movement
 
@@ -124,7 +134,8 @@ public class Tank implements Collidible{
         this.ShootPressed = false;
     }
 
-    void update() {
+    void update(Tank other) {
+
         if (this.UpPressed) {
             this.moveForwards();
             this.isReverse = false;
@@ -149,6 +160,10 @@ public class Tank implements Collidible{
             // System.out.println(b.toString());
             (new Sound(Resources.getClip("bullet"))).playSound();
             ammo.add(b);
+        }
+
+        if (this.getHitBox().intersects(other.getHitBox())) {
+            handleCollision(other);
         }
 
         this.coolDown += this.rateOfFire;
@@ -323,7 +338,9 @@ public class Tank implements Collidible{
             } else {
                 this.moveBackwards();
             }
+
         }
+
 
     }
 
