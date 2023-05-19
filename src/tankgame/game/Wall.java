@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 
 public class Wall implements Collidible {
+
     protected float y, x;
     protected BufferedImage img;
 
@@ -27,6 +28,10 @@ public class Wall implements Collidible {
     void drawImage(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, (int)x, (int)y, null);
+
+        // Test to see hitbox
+        g2d.setColor(Color.black);
+        g2d.drawRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
 
     }
 

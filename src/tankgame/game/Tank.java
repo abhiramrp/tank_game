@@ -15,12 +15,16 @@ public class Tank implements Collidible{
     private float x;
     private float y;
 
+    private boolean isReverse;
+
     public float getX() {
         return x;
     }
 
     public void setX(float x) {
+
         this.x = x;
+        this.updateHitBox((int) this.x, (int) this.y);
     }
 
     public float getY() {
@@ -29,6 +33,7 @@ public class Tank implements Collidible{
 
     public void setY(float y) {
         this.y = y;
+        this.updateHitBox((int) this.x, (int) this.y);
     }
 
     private float vx;
@@ -40,8 +45,10 @@ public class Tank implements Collidible{
     private int screen_x;
     private int screen_y;
 
-    private float R = 4f;
-    private float ROTATIONSPEED = 3.0f;
+
+
+    private float speed = 4f;
+    private float rotationSpeed = 3.0f;
 
     private BufferedImage img;
     private boolean UpPressed;
@@ -70,9 +77,11 @@ public class Tank implements Collidible{
         this.img = img;
         this.angle = angle;
 
+        this.isReverse = false;
         this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
 
+    // Movement
 
     void toggleUpPressed() {
         this.UpPressed = true;
@@ -118,10 +127,12 @@ public class Tank implements Collidible{
     void update() {
         if (this.UpPressed) {
             this.moveForwards();
+            this.isReverse = false;
         }
 
         if (this.DownPressed) {
             this.moveBackwards();
+            this.isReverse = true;
         }
 
         if (this.LeftPressed) {
@@ -144,27 +155,34 @@ public class Tank implements Collidible{
 
         this.ammo.forEach(b -> b.update());
 
+        this.updateHitBox((int) x, (int) y);
+
+    }
+
+    public void updateHitBox(int x, int y) {
+        this.hitbox.x = x;
+        this.hitbox.y = y;
     }
 
     private void rotateLeft() {
-        this.angle -= this.ROTATIONSPEED;
+        this.angle -= this.rotationSpeed;
     }
 
     private void rotateRight() {
-        this.angle += this.ROTATIONSPEED;
+        this.angle += this.rotationSpeed;
     }
 
     private void moveBackwards() {
-        vx =  Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy =  Math.round(R * Math.sin(Math.toRadians(angle)));
+        vx =  Math.round(this.speed * Math.cos(Math.toRadians(angle)));
+        vy =  Math.round(this.speed * Math.sin(Math.toRadians(angle)));
         x -= vx;
         y -= vy;
         this.checkBorder();
     }
 
     private void moveForwards() {
-        vx = Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = Math.round(R * Math.sin(Math.toRadians(angle)));
+        vx = Math.round(this.speed * Math.cos(Math.toRadians(angle)));
+        vy = Math.round(this.speed * Math.sin(Math.toRadians(angle)));
         x += vx;
         y += vy;
         this.checkBorder();
@@ -188,6 +206,34 @@ public class Tank implements Collidible{
         check_screen();
     }
 
+    // Powerups
+
+    public void addLife() {
+        this.lives += 1;
+    }
+
+    public void addSpeed() {
+        this.speed += 1;
+    }
+
+    public void resetHealth() {
+        this.health = 100;
+    }
+
+    public void slowRotate() {
+        this.rotationSpeed -= 0.25;
+    }
+
+    // Display
+
+    public int getScreen_x() {
+        return this.screen_x;
+    }
+
+    public int getScreen_y() {
+        return this.screen_y;
+    }
+
     public void check_screen() {
         this.screen_x = (int)this.getX() - GameConstants.GAME_SCREEN_WIDTH / 4;
         this.screen_y = (int)this.getY() - GameConstants.GAME_SCREEN_HEIGHT / 2;
@@ -209,18 +255,14 @@ public class Tank implements Collidible{
         }
     }
 
-    public int getScreen_x() {
-        return this.screen_x;
-    }
-
-    public int getScreen_y() {
-        return this.screen_y;
-    }
-
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
     }
+
+
+
+    // Collision Detection
 
 
     void drawImage(Graphics g) {
@@ -234,20 +276,29 @@ public class Tank implements Collidible{
         g2d.drawImage(this.img, rotation, null);
         g2d.setColor(Color.RED);
 
-        g2d.setColor(Color.cyan);
-        g2d.drawRect((int)x,(int)y+30, 100, 25 );
 
+        // Test to see hitbox
+        g2d.setColor(Color.black);
+        g2d.drawRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+
+
+        // health
         if(this.health >= 70) {
             g2d.setColor(Color.GREEN);
         } else if (this.health >= 40) {
-            g2d.setColor(Color.yellow);
+            g2d.setColor(Color.ORANGE);
         } else {
             g2d.setColor(Color.RED);
         }
 
+        g2d.drawRect((int)x-25,(int)y-30, 100, 25 );
+        g2d.fillRect((int)x-25,(int)y-30, this.health, 25 );
 
-
-        g2d.fillRect((int)x,(int)y+30, 100, 25 );
+        // lives
+        for (int i=0; i < this.lives; i++) {
+            g2d.drawOval((int)(x-25) + (i*20), (int)y + 55, 15, 15);
+            g2d.fillOval((int)(x-25) + (i*20), (int)y + 55, 15, 15);
+        }
 
     }
 
@@ -258,6 +309,21 @@ public class Tank implements Collidible{
 
     @Override
     public void handleCollision(Collidible with) {
+        if(with instanceof Wall) {
+            if(isReverse) {
+                this.moveForwards();
+            } else {
+                this.moveBackwards();
+            }
+        }
+
+        if(with instanceof Tank) {
+            if(isReverse) {
+                this.moveForwards();
+            } else {
+                this.moveBackwards();
+            }
+        }
 
     }
 
@@ -265,4 +331,5 @@ public class Tank implements Collidible{
     public boolean isCollidle() {
         return false;
     }
+
 }

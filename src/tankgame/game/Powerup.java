@@ -24,26 +24,9 @@ public abstract class Powerup {
     }
 
     // abstract method
-    public abstract void doPowerUp();
-
-
-    /*
-    @Override
-    void handleCollision(Collidible with) {}
-
-
-    @Override
-    public Rectangle getHitBox() {
-        return this.hitbox.getBounds();
-    }
+    public abstract void doPowerUp(Tank t);
 
 
 
-    @Override
-    boolean isCollidle() {
-        return false;
-    }
-
-     */
 
 }

@@ -59,13 +59,21 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t1.update();
                 this.t2.update();
 
+                if(this.t1.getHitBox().intersects(this.t2.getHitBox())) {
+                    t1.handleCollision(t2);
+                    t2.handleCollision(t1);
+                }
+
+
                 for (int i=0; i < walls.size(); i++) {
                     Wall w = this.walls.get(i);
                     if(w.getHitBox().intersects(this.t1.getHitBox())) {
+                        t1.handleCollision(w);
                         // System.out.println("t1 touched wall");
                     }
 
                     if(w.getHitBox().intersects(this.t2.getHitBox())) {
+                        t2.handleCollision(w);
                         // System.out.println("t2 touched wall");
                     }
                 }
@@ -109,8 +117,8 @@ public class GameWorld extends JPanel implements Runnable {
         this.tick = 0;
         this.t1.setX(300);
         this.t1.setY(300);
-        this.t2.setX(500);
-        this.t2.setY(500);
+        this.t2.setX(800);
+        this.t2.setY(800);
     }
 
     public void InitializeGame() {
@@ -127,8 +135,8 @@ public class GameWorld extends JPanel implements Runnable {
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
         this.lf.getJf().addKeyListener(tc1);
 
-        t2 = new Tank(500, 500, 0, 0, (short) 0, Resources.getImage("tank2img"));
-        TankControl tc2 = new TankControl(t2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_BACK_SPACE);
+        t2 = new Tank(800, 800, 0, 0, (short) 0, Resources.getImage("tank2img"));
+        TankControl tc2 = new TankControl(t2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
         this.lf.getJf().addKeyListener(tc2);
 
         try (BufferedReader mapReader = new BufferedReader(new InputStreamReader(GameWorld.class.getClassLoader().getResourceAsStream("resources/map.txt")))) {
