@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Bullet {
+public class Bullet implements Collidible{
     private float x;
     private float y;
 
@@ -18,12 +18,19 @@ public class Bullet {
 
     private BufferedImage img;
 
+    private Rectangle hitbox;
+
+    private boolean visible;
+
 
     public Bullet(float x, float y, float angle, BufferedImage img) {
         this.x = x;
         this.y = y;
         this.angle = angle;
         this.img = img;
+
+        this.visible = true;
+        this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
 
     void setX(float x){ this.x = x; }
@@ -36,7 +43,9 @@ public class Bullet {
     }
 
     void update() {
+
         this.moveForwards();
+
     }
 
     private void moveForwards() {
@@ -46,17 +55,11 @@ public class Bullet {
     }
 
     private void checkBorder() {
-        if (x < 30) {
-            x = 30;
+        if ((x < 30) || (x >= GameConstants.WORLD_WIDTH - 88)) {
+            this.visible = false;
         }
-        if (x >= GameConstants.WORLD_WIDTH - 88) {
-            x = GameConstants.WORLD_WIDTH - 88;
-        }
-        if (y < 40) {
-            y = 40;
-        }
-        if (y >= GameConstants.WORLD_HEIGHT - 80) {
-            y = GameConstants.WORLD_HEIGHT - 80;
+        if ((y < 30) || (y >= GameConstants.WORLD_HEIGHT - 88)) {
+            this.visible = false;
         }
     }
 
@@ -67,13 +70,48 @@ public class Bullet {
 
     void drawImage(Graphics g) {
 
-        AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
-        rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(this.img, rotation, null);
-        g2d.setColor(Color.RED);
-        //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+        if(visible) {
 
+            AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
+            rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.drawImage(this.img, rotation, null);
+            g2d.setColor(Color.RED);
+            //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
+            g2d.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
+        }
+
+    }
+
+    public void setVisible(boolean b) {
+        this.visible = b;
+    }
+
+    @Override
+    public Rectangle getHitBox() {
+        return this.hitbox.getBounds();
+    }
+
+    @Override
+    public void handleCollision(Collidible with) {
+        if(with instanceof Cactus) {
+            ((Cactus) with).setVisible(false);
+        }
+
+        if(with instanceof Wall) {
+            this.visible = false;
+        }
+
+        if(with instanceof Tank) {
+
+            ((Tank) with).getShot();
+            this.visible = false;
+        }
+
+    }
+
+    @Override
+    public boolean isVisible() {
+        return this.visible;
     }
 }

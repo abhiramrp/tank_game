@@ -17,8 +17,6 @@ public class Tank implements Collidible{
 
     private boolean isReverse;
 
-    private boolean isTankCollide;
-
     public float getX() {
         return x;
     }
@@ -36,10 +34,6 @@ public class Tank implements Collidible{
     public void setY(float y) {
         this.y = y;
         this.updateHitBox((int) this.x, (int) this.y);
-    }
-
-    public void setTankCollide(boolean tankCollide) {
-        isTankCollide = tankCollide;
     }
 
 
@@ -65,7 +59,8 @@ public class Tank implements Collidible{
     private boolean ShootPressed;
 
     private Bullet b;
-    List<Bullet> ammo = new ArrayList<>();
+
+    ArrayList<Bullet> ammo = new ArrayList<>();
 
 
     float fireDelay = 120f;
@@ -85,7 +80,6 @@ public class Tank implements Collidible{
         this.angle = angle;
 
         this.isReverse = false;
-        this.isTankCollide = false;
         this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
 
@@ -157,11 +151,14 @@ public class Tank implements Collidible{
         if (this.ShootPressed && this.coolDown >= this.fireDelay) {
             this.coolDown = 0;
             b = new Bullet(x, y, angle, Resources.getImage("bullet"));
+            this.ammo.add(b);
             // System.out.println(b.toString());
             (new Sound(Resources.getClip("bullet"))).playSound();
-            ammo.add(b);
+
         }
 
+
+        // So Tanks can't overlap
         if (this.getHitBox().intersects(other.getHitBox())) {
             handleCollision(other);
         }
@@ -170,8 +167,20 @@ public class Tank implements Collidible{
 
         this.ammo.forEach(b -> b.update());
 
+        this.checkAmmo();
+
         this.updateHitBox((int) x, (int) y);
 
+    }
+
+    public void checkAmmo() {
+        for(int i=0; i<this.ammo.size(); i++) {
+            Bullet b = this.ammo.get(i);
+
+            if(b.isVisible() == false) {
+                this.ammo.remove(b);
+            }
+        }
     }
 
     public void updateHitBox(int x, int y) {
@@ -221,25 +230,38 @@ public class Tank implements Collidible{
         check_screen();
     }
 
-    // Powerups
+    /**
+     * Bullets
+     */
 
-    public void addLife() {
-        this.lives += 1;
+
+    public ArrayList<Bullet> getAmmo() {
+        return this.ammo;
     }
 
-    public void addSpeed() {
-        this.speed += 1;
-    }
+    public void getShot() {
+        this.health -= 11;
 
-    public void resetHealth() {
-        this.health = 100;
-    }
+        if (this.health <= 0) {
+            this.resetHealth();
+            this.lives -= 1;
+        }
 
-    public void slowRotate() {
-        this.rotationSpeed -= 0.25;
     }
+    /**
+     * Powerups
+     */
 
-    // Display
+    public void addLife() {this.lives += 1;}
+    public void addSpeed() {this.speed += 2f;}
+
+    public void resetHealth() { this.health = 100; }
+
+    public void slowRotate() { this.rotationSpeed -= 0.25; }
+
+    /**
+     * Display
+     */
 
     public int getScreen_x() {
         return this.screen_x;
@@ -274,11 +296,6 @@ public class Tank implements Collidible{
     public String toString() {
         return "x=" + x + ", y=" + y + ", angle=" + angle;
     }
-
-
-
-    // Collision Detection
-
 
     void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
@@ -341,7 +358,6 @@ public class Tank implements Collidible{
 
         }
 
-
     }
 
     @Override
@@ -352,5 +368,7 @@ public class Tank implements Collidible{
 
         return true;
     }
+
+
 
 }

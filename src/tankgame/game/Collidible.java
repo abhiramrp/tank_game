@@ -6,4 +6,5 @@ public interface Collidible {
     Rectangle getHitBox();
     void handleCollision(Collidible with);
     boolean isVisible();
+
 }

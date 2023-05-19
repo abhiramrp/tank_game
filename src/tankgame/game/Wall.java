@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 public class Wall implements Collidible {
 
@@ -38,6 +39,7 @@ public class Wall implements Collidible {
 
     }
 
+
     @Override
     public Rectangle getHitBox() {
         return this.hitbox.getBounds();
@@ -45,6 +47,9 @@ public class Wall implements Collidible {
 
     @Override
     public void handleCollision(Collidible with) {
+        if(with instanceof Bullet){
+            ((Bullet) with).setVisible(false);
+        }
 
     }
 

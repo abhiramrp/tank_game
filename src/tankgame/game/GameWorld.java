@@ -72,6 +72,8 @@ public class GameWorld extends JPanel implements Runnable {
                         t2.handleCollision(w);
                         // System.out.println("t2 touched wall");
                     }
+
+
                 }
 
 
