@@ -2,9 +2,7 @@
 
 ## 2D player game
 
-in progess
+![start game](src/resources/images/menus/start.png)
 
-bullet - https://freesound.org/s/51749/
-shoot_tank - https://freesound.org/s/587190/
-sand - https://freesound.org/s/364999/
-powerup - https://freesound.org/s/341695/
+This is a 2D Tank Game player built using Java. I did this as part of my Software Development course at SFSU. I used my professor's template code and instructions. 
+
