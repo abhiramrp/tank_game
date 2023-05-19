@@ -47,9 +47,6 @@ public class Wall implements Collidible {
 
     @Override
     public void handleCollision(Collidible with) {
-        if(with instanceof Bullet){
-            ((Bullet) with).setVisible(false);
-        }
 
     }
 

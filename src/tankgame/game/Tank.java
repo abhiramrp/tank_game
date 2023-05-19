@@ -172,11 +172,9 @@ public class Tank implements Collidible{
 
     }
 
-    public void shootOther(Tank other) {
+    public void shootOther(Collidible other) {
         for(int i=0; i < this.ammo.size(); i++) {
             Bullet b = this.ammo.get(i);
-
-            System.out.println(b.getHitBox().intersects(other.getHitBox()));
 
             if(b.getHitBox().intersects(other.getHitBox())){
                 b.handleCollision(other);

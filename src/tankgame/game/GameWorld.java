@@ -73,6 +73,14 @@ public class GameWorld extends JPanel implements Runnable {
                         // System.out.println("t2 touched wall");
                     }
 
+                    t1.shootOther(w);
+                    t2.shootOther(w);
+
+                    if(!(w.isVisible())) {
+                        walls.remove(w);
+                    }
+
+
                 }
 
 

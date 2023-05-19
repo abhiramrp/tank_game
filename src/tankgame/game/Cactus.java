@@ -11,4 +11,5 @@ public class Cactus extends Wall {
     public void setVisible(boolean b) {
         this.visible = b;
     }
+
 }

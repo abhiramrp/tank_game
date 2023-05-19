@@ -113,6 +113,7 @@ public class Bullet implements Collidible{
         if(with instanceof Tank) {
 
             ((Tank) with).getShot();
+            (new Sound(Resources.getClip("shoot_tank"))).playSound();
             this.visible = false;
         }
 
