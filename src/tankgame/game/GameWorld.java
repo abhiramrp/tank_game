@@ -73,9 +73,7 @@ public class GameWorld extends JPanel implements Runnable {
                         // System.out.println("t2 touched wall");
                     }
 
-
                 }
-
 
 
                 for (int i=0; i < powerups.size(); i++) {

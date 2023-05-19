@@ -61,6 +61,13 @@ public class Bullet implements Collidible{
         if ((y < 30) || (y >= GameConstants.WORLD_HEIGHT - 88)) {
             this.visible = false;
         }
+
+        this.updateHitBox((int) x, (int) y);
+    }
+
+    private void updateHitBox(int x, int y) {
+        this.hitbox.x = x;
+        this.hitbox.y = y;
     }
 
     @Override
@@ -96,6 +103,7 @@ public class Bullet implements Collidible{
     public void handleCollision(Collidible with) {
         if(with instanceof Cactus) {
             ((Cactus) with).setVisible(false);
+            this.visible = false;
         }
 
         if(with instanceof Wall) {

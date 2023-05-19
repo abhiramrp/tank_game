@@ -157,7 +157,6 @@ public class Tank implements Collidible{
 
         }
 
-
         // So Tanks can't overlap
         if (this.getHitBox().intersects(other.getHitBox())) {
             handleCollision(other);
@@ -167,34 +166,35 @@ public class Tank implements Collidible{
 
         this.ammo.forEach(b -> b.update());
 
-        this.checkAmmo();
-
         this.updateHitBox((int) x, (int) y);
+
+        this.shootOther(other);
 
     }
 
-    public void checkAmmo() {
-        for(int i=0; i<this.ammo.size(); i++) {
+    public void shootOther(Tank other) {
+        for(int i=0; i < this.ammo.size(); i++) {
             Bullet b = this.ammo.get(i);
 
-            if(b.isVisible() == false) {
+            System.out.println(b.getHitBox().intersects(other.getHitBox()));
+
+            if(b.getHitBox().intersects(other.getHitBox())){
+                b.handleCollision(other);
                 this.ammo.remove(b);
             }
         }
+
     }
 
-    public void updateHitBox(int x, int y) {
+
+    private void updateHitBox(int x, int y) {
         this.hitbox.x = x;
         this.hitbox.y = y;
     }
 
-    private void rotateLeft() {
-        this.angle -= this.rotationSpeed;
-    }
+    private void rotateLeft() { this.angle -= this.rotationSpeed;}
 
-    private void rotateRight() {
-        this.angle += this.rotationSpeed;
-    }
+    private void rotateRight() {this.angle += this.rotationSpeed;}
 
     private void moveBackwards() {
         vx =  Math.round(this.speed * Math.cos(Math.toRadians(angle)));
