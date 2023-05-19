@@ -19,7 +19,7 @@ public class StartMenuPanel extends JPanel {
         this.lf = lf;
 
         try {
-            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("resources/images/title.png"));
+            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("resources/images/menus/start.png"));
         } catch (IOException e) {
             System.out.println("Error cant read menu background");
             e.printStackTrace();

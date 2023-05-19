@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -60,7 +61,6 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t2.update(t1);
 
 
-
                 for (int i=0; i < walls.size(); i++) {
                     Wall w = this.walls.get(i);
                     if(w.getHitBox().intersects(this.t1.getHitBox())) {
@@ -75,10 +75,6 @@ public class GameWorld extends JPanel implements Runnable {
 
                     t1.shootOther(w);
                     t2.shootOther(w);
-
-                    if(!(w.isVisible())) {
-                        walls.remove(w);
-                    }
 
 
                 }
@@ -103,13 +99,23 @@ public class GameWorld extends JPanel implements Runnable {
                 Thread.sleep( 1000 / 144);
 
 
-                /*
-                if (this.tick >= 144 * 8) {
+                if (this.t1.getIsDead() || this.t2.getIsDead()) {
                     sand.stopSound();
+
+                    if(t1.getIsDead()) {
+                        System.out.println("P1 is dead");
+                        lf.setWinner(false);
+                    }
+
+                    if(t2.getIsDead()) {
+                        System.out.println("P2 is dead");
+                        lf.setWinner(true);
+                    }
+
                     this.lf.setFrame("end");
+
                     return;
                 }
-                */
 
             }
         } catch (InterruptedException ignored) {
@@ -214,7 +220,19 @@ public class GameWorld extends JPanel implements Runnable {
             }
         }
 
+
+
+        for (Iterator<Wall> it = walls.iterator(); it.hasNext(); ) {
+            Wall nextWall = it.next();
+            if (!nextWall.isVisible()) {
+                it.remove();
+            }
+        }
+
         walls.forEach(w -> w.drawImage(buffer));
+
+
+
         powerups.forEach(p -> p.drawImage(buffer));
 
 

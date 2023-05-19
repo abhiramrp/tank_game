@@ -18,8 +18,14 @@ public class EndGamePanel extends JPanel {
     public EndGamePanel(Launcher lf) {
         this.lf = lf;
 
+        String winner = "tank2end.png";
+
+        if(lf.getWinner()) {
+            winner = "tank1end.png";
+        }
+
         try {
-            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("resources/images/title.png"));
+            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("resources/images/menus/" + winner));
         } catch (IOException e) {
             System.out.println("Error cant read menu background");
             e.printStackTrace();

@@ -68,8 +68,10 @@ public class Tank implements Collidible{
     float rateOfFire = 1f;
 
 
-    private int health = 100;
-    private int lives = 5;
+    private int health = 20;
+    private int lives = 2;
+
+    private boolean isDead;
 
     public Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
         this.x = x;
@@ -80,9 +82,9 @@ public class Tank implements Collidible{
         this.angle = angle;
 
         this.isReverse = false;
+        this.isDead = false;
         this.hitbox = new Rectangle((int)x, (int)y, this.img.getWidth(), this.img.getHeight());
     }
-
 
 
     // Movement
@@ -245,7 +247,16 @@ public class Tank implements Collidible{
             this.lives -= 1;
         }
 
+        if(this.lives <= 0) {
+            this.isDead = true;
+        }
+
     }
+
+    public boolean getIsDead() {
+        return this.isDead;
+    }
+
     /**
      * Powerups
      */
@@ -253,7 +264,7 @@ public class Tank implements Collidible{
     public void addLife() {this.lives += 1;}
     public void addSpeed() {this.speed += 2f;}
 
-    public void resetHealth() { this.health = 100; }
+    public void resetHealth() { this.health = 30; }
 
     public void slowRotate() { this.rotationSpeed -= 0.25; }
 
@@ -306,10 +317,11 @@ public class Tank implements Collidible{
         g2d.drawImage(this.img, rotation, null);
         g2d.setColor(Color.RED);
 
-
+        /*
         // Test to see hitbox
         g2d.setColor(Color.black);
         g2d.drawRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+         */
 
 
         // health

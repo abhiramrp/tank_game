@@ -33,9 +33,12 @@ public class Wall implements Collidible {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, (int)x, (int)y, null);
 
+        /*
         // Test to see hitbox
         g2d.setColor(Color.black);
         g2d.drawRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+
+         */
 
     }
 
