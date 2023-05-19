@@ -80,6 +80,7 @@ public class Launcher {
                 this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH,GameConstants.START_MENU_SCREEN_HEIGHT);
                 break;
             case "game":
+
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH,GameConstants.GAME_SCREEN_HEIGHT);
                 (new Thread(this.gamePanel)).start();
                 break;

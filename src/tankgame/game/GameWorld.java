@@ -45,13 +45,6 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() {
         try {
             this.resetGame();
-
-            /*
-            t = new Thread(new Sound(Resources.getClip("sand")));
-            t.start();
-
-             */
-
             sand.run();
 
             while (true) {
@@ -93,12 +86,6 @@ public class GameWorld extends JPanel implements Runnable {
                     }
                 }
 
-
-                this.repaint();
-
-                Thread.sleep( 1000 / 144);
-
-
                 if (this.t1.getIsDead() || this.t2.getIsDead()) {
                     sand.stopSound();
 
@@ -112,13 +99,18 @@ public class GameWorld extends JPanel implements Runnable {
                         lf.setWinner(true);
                     }
 
-                    this.lf.setFrame("end");
 
+                    this.lf.setFrame("end");
                     return;
                 }
 
+                this.repaint();
+
+                Thread.sleep( 1000 / 144);
+
             }
         } catch (InterruptedException ignored) {
+            Thread.currentThread().interrupt();
             System.out.println(ignored);
         }
 
