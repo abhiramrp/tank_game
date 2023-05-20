@@ -90,12 +90,10 @@ public class GameWorld extends JPanel implements Runnable {
                     sand.stopSound();
 
                     if(t1.getIsDead()) {
-                        System.out.println("P1 is dead");
                         lf.setWinner(false);
                     }
 
                     if(t2.getIsDead()) {
-                        System.out.println("P2 is dead");
                         lf.setWinner(true);
                     }
 
@@ -223,8 +221,6 @@ public class GameWorld extends JPanel implements Runnable {
 
         walls.forEach(w -> w.drawImage(buffer));
 
-
-
         powerups.forEach(p -> p.drawImage(buffer));
 
 
@@ -232,7 +228,6 @@ public class GameWorld extends JPanel implements Runnable {
         this.t2.drawImage(buffer);
 
         g2.drawImage(world, 0, 0, null);
-
 
         this.drawSplitScreen(world, g2);
 

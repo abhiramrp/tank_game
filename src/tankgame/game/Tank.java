@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 
 public class Tank implements Collidible{
     private float x;
@@ -68,8 +66,8 @@ public class Tank implements Collidible{
     float rateOfFire = 1f;
 
 
-    private int health = 20;
-    private int lives = 2;
+    private int health = 100;
+    private int lives = 5;
 
     private boolean isDead;
 
@@ -264,7 +262,7 @@ public class Tank implements Collidible{
     public void addLife() {this.lives += 1;}
     public void addSpeed() {this.speed += 2f;}
 
-    public void resetHealth() { this.health = 30; }
+    public void resetHealth() { this.health = 100; }
 
     public void slowRotate() { this.rotationSpeed -= 0.25; }
 

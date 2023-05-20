@@ -25,20 +25,10 @@ public class Launcher {
     private boolean isWinner;
 
     public boolean getWinner() {
-        if(this.isWinner) {
-            System.out.println("LF again p1 win");
-        } else {
-            System.out.println("LF again p2 win");
-        }
         return this.isWinner;
     }
 
     public void setWinner(Boolean w) {
-        if(w) {
-            System.out.println("LF p1 win");
-        } else {
-            System.out.println("LF p2 win");
-        }
 
         this.isWinner = w;
 
@@ -58,8 +48,6 @@ public class Launcher {
         this.mainPanel = new JPanel();
         this.startPanel = new StartMenuPanel(this);
         this.gamePanel = new GameWorld(this);
-        this.gamePanel.InitializeGame();
-
 
         this.cl = new CardLayout();
         this.mainPanel.setLayout(cl);
@@ -80,7 +68,7 @@ public class Launcher {
                 this.jf.setSize(GameConstants.START_MENU_SCREEN_WIDTH,GameConstants.START_MENU_SCREEN_HEIGHT);
                 break;
             case "game":
-
+                this.gamePanel.InitializeGame();
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH,GameConstants.GAME_SCREEN_HEIGHT);
                 (new Thread(this.gamePanel)).start();
                 break;
